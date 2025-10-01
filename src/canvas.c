@@ -69,7 +69,7 @@ void update_canvas(canvas_T * canvas){
     XPutImage(canvas->display, canvas->window, 
             DefaultGC(canvas->display, canvas->screen), 
             canvas->image, 0, 0, 0, 0, 
-            size_x_px(canvas), size_x_px(canvas));
+            size_x_px(canvas), size_y_px(canvas));
 }
 
 void destroy_canvas(canvas_T * canvas){

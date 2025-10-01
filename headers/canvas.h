@@ -6,9 +6,9 @@
 
 typedef struct canvas_T {
     // properties
-    int size_x;
-    int size_y;
-    int scale;
+    const int size_x;
+    const int size_y;
+    const int scale;
     
     // data
     char * image_data;

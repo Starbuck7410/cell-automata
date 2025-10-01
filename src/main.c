@@ -1,5 +1,5 @@
 #include "../headers/canvas.h"
-
+#include <string.h>
 
 int main(){
     canvas_T canvas = {
@@ -10,9 +10,8 @@ int main(){
     };
 
     if (create_canvas(&canvas)) return -1;
-    for(int i = 0; i < (size_x_px(&canvas) * size_y_px(&canvas) ); i++){
-        canvas.image_data[i] = 0;
-    }
+
+    memset(canvas.image_data, 0, size_x_px(&canvas) * size_y_px(&canvas) * 4);
 	
     update_canvas(&canvas);
     while(!get_event(&canvas, KeyPressMask)){
