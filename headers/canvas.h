@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define BPP 4 // Bytes per pixel
 
 typedef struct canvas_T {
     // properties
@@ -33,3 +34,5 @@ void update_canvas(canvas_T *canvas);
 void destroy_canvas(canvas_T *canvas);
 
 int get_event(canvas_T *canvas, long mask);
+
+void set_pixel(canvas_T *canvas, int x, int y, char red, char green, char blue);

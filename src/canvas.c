@@ -30,6 +30,7 @@ int create_canvas(canvas_T * canvas) {
         return -1;
     }
 
+
     // Create a window
     canvas->window = XCreateSimpleWindow(canvas->display, RootWindow(canvas->display, canvas->screen),
                                         10, 10, size_x_px(canvas), size_y_px(canvas) , 1,
@@ -56,6 +57,12 @@ int create_canvas(canvas_T * canvas) {
                                  canvas->image_data, size_x_px(canvas), size_y_px(canvas),
                                  32, 0);
 
+
+    // printf("depth=%d bpp=%d bytes_per_line=%d\n",
+    //    canvas->image->depth,
+    //    canvas->image->bits_per_pixel,
+    //    canvas->image->bytes_per_line);
+
     if (!canvas->image) {
         fprintf(stderr, "Error: Failed to create XImage\n");
         free(canvas->image_data);
@@ -70,6 +77,7 @@ void update_canvas(canvas_T * canvas){
             DefaultGC(canvas->display, canvas->screen), 
             canvas->image, 0, 0, 0, 0, 
             size_x_px(canvas), size_y_px(canvas));
+    XFlush(canvas->display);
 }
 
 void destroy_canvas(canvas_T * canvas){
@@ -80,4 +88,18 @@ void destroy_canvas(canvas_T * canvas){
 
 int get_event(canvas_T * canvas, long mask){
     return XCheckWindowEvent(canvas->display, canvas->window, mask, & canvas->event);
+}
+
+void set_pixel(canvas_T * canvas, int x, int y, char red, char green, char blue){
+    int index = y * size_x_px(canvas) + x;
+    int offset_y = 0;
+    for(int j = 0; j < canvas->scale; j++){
+        for(int i = 0; i < canvas->scale; i++){
+            canvas->image_data[(offset_y + i + index) * BPP + 0] = red;
+            canvas->image_data[(offset_y + i + index) * BPP + 1] = green;
+            canvas->image_data[(offset_y + i + index) * BPP + 2] = blue;
+            canvas->image_data[(offset_y + i + index) * BPP + 2] = 0;
+        }
+        offset_y += size_x_px(canvas);
+    }
 }

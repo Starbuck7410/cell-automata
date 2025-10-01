@@ -11,8 +11,14 @@ int main(){
 
     if (create_canvas(&canvas)) return -1;
 
-    memset(canvas.image_data, 0, size_x_px(&canvas) * size_y_px(&canvas) * 4);
+    // memset(canvas.image_data, 0, size_x_px(&canvas) * size_y_px(&canvas) * 4);
 	
+    for (int y = 0; y < canvas.size_y; y++) {
+        for (int x = 0; x < canvas.size_x; x++) {
+            set_pixel(&canvas, x, y, 0, 0, 0);
+        }
+    }
+
     update_canvas(&canvas);
     while(!get_event(&canvas, KeyPressMask)){
 
