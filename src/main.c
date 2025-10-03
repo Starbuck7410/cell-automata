@@ -14,10 +14,14 @@ int main(){
 
     for (int y = 0; y < canvas.size_y; y++) {
         for (int x = 0; x < canvas.size_x; x++) {
-            set_pixel(&canvas, x, y, 1, 20, 30);
+            set_pixel(&canvas, x, y, (pixel_T) {.red = 1, .green = 20, .blue = 30, .alpha = 255});
         }
     }
     
+
+    
+
+
     update_canvas(&canvas);
     while(!get_event(&canvas, KeyPressMask)){
         continue;

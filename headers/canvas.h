@@ -6,6 +6,13 @@
 
 #define BPP 4 // Bytes per pixel
 
+typedef struct pixel_T { // BGRA
+    char blue;
+    char green;
+    char red;
+    char alpha;
+} pixel_T;
+
 typedef struct canvas_T {
     // properties
     const int size_x;
@@ -13,7 +20,7 @@ typedef struct canvas_T {
     const int scale;
     
     // data
-    char * image_data;
+    pixel_T * image_data;
     int depth;
 
     // X stuff
@@ -24,9 +31,9 @@ typedef struct canvas_T {
     int screen;
 } canvas_T;
 
-int size_x_px(canvas_T *canvas);
+int size_x_mpx(canvas_T *canvas);
 
-int size_y_px(canvas_T *canvas);
+int size_y_mpx(canvas_T *canvas);
 
 int create_canvas(canvas_T *canvas, char * name);
 
@@ -36,4 +43,6 @@ void destroy_canvas(canvas_T *canvas);
 
 int get_event(canvas_T *canvas, long mask);
 
-void set_pixel(canvas_T *canvas, int x, int y, char red, char green, char blue);
+void set_pixel(canvas_T *canvas, int x, int y, pixel_T pixel);
+
+
