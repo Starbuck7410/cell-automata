@@ -1,5 +1,5 @@
 #!/bin/bash
 
-gcc ./src/* -o a.out -lX11 
+gcc -g ./src/* -o a.out -lX11 
 
 ./a.out

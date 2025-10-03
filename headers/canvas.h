@@ -2,6 +2,7 @@
 #include <X11/Xutil.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define BPP 4 // Bytes per pixel
 
@@ -27,7 +28,7 @@ int size_x_px(canvas_T *canvas);
 
 int size_y_px(canvas_T *canvas);
 
-int create_canvas(canvas_T *canvas);
+int create_canvas(canvas_T *canvas, char * name);
 
 void update_canvas(canvas_T *canvas);
 
