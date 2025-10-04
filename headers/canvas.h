@@ -18,6 +18,7 @@ typedef struct canvas_T {
     const int size_x;
     const int size_y;
     const int scale;
+    char * name;
     
     // data
     pixel_T * image_data;
@@ -35,7 +36,7 @@ int size_x_mpx(canvas_T *canvas);
 
 int size_y_mpx(canvas_T *canvas);
 
-int create_canvas(canvas_T *canvas, char * name);
+int create_canvas(canvas_T *canvas);
 
 void update_canvas(canvas_T *canvas);
 
@@ -44,5 +45,5 @@ void destroy_canvas(canvas_T *canvas);
 int get_event(canvas_T *canvas, long mask);
 
 void set_pixel(canvas_T *canvas, int x, int y, pixel_T pixel);
-
-
+void fill_canvas(canvas_T * canvas, pixel_T pixel);
+int get_last_keypress(canvas_T * canvas);

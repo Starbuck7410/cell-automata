@@ -13,7 +13,7 @@ int size_y_mpx(canvas_T * canvas){
     return canvas->size_y * canvas->scale;
 }
 
-int create_canvas(canvas_T * canvas, char * name) {
+int create_canvas(canvas_T * canvas) {
     // Connect to the X server
     canvas->display = XOpenDisplay(NULL);
     
@@ -40,8 +40,8 @@ int create_canvas(canvas_T * canvas, char * name) {
     BlackPixel(canvas->display, canvas->screen),
     WhitePixel(canvas->display, canvas->screen));
     
-    XStoreName(canvas->display, canvas->window, name);
-    XSelectInput(canvas->display, canvas->window, ExposureMask | KeyPressMask);
+    XStoreName(canvas->display, canvas->window, canvas->name);
+    XSelectInput(canvas->display, canvas->window, ExposureMask | KeyPressMask | ButtonPressMask);
     XMapWindow(canvas->display, canvas->window);
     XFlush(canvas->display);
 
@@ -103,6 +103,15 @@ int get_event(canvas_T * canvas, long mask){
     return XCheckWindowEvent(canvas->display, canvas->window, mask, & canvas->event);
 }
 
+// int get_last_keypress(canvas_T * canvas) {
+// 	char buffer[32];
+// 	KeySym keysym;
+// 	int length = XLookupString(&(canvas->event.xkey), buffer, sizeof(buffer) - 1, &keysym, NULL);
+// 	buffer[length] = '\0';  // Null-terminate the string
+//     // printf("Keycode: %u, Keysym: %lu, ASCII: %s\n", canvas->event.xkey.keycode, keysym, buffer);
+// 	return (int) buffer[0];
+// }
+
 int xy_to_index(canvas_T * canvas, int x, int y){
     return canvas->scale * (y * size_x_mpx(canvas) + x);
 }
@@ -114,6 +123,14 @@ void set_pixel(canvas_T * canvas, int x, int y, pixel_T pixel){
         for(int i = 0; i < canvas->scale; i++){
             int index = (start_index + i + j * size_x_mpx(canvas));
             canvas->image_data[index] = pixel;
+        }
+    }
+}
+
+void fill_canvas(canvas_T * canvas, pixel_T pixel){
+    for (int y = 0; y < canvas->size_y; y++) {
+        for (int x = 0; x < canvas->size_x; x++) {
+            set_pixel(canvas, x, y, pixel);
         }
     }
 }
