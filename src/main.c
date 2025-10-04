@@ -49,16 +49,14 @@ int main(){
     if (create_canvas(&canvas)) return -1;
     if (create_automata(&automata)) return -1;
 
+    fill_canvas(&canvas, (pixel_T) {.red = 0, .green = 0, .blue = 0, .alpha = 255});
 
-
-    fill_canvas(&canvas, (pixel_T) {.red = 1, .green = 20, .blue = 30, .alpha = 255});
-    automata.cells[10] = 1;
-    update_canvas(&canvas);
-    while(canvas.event.xkey.keycode != 24){
+    while(canvas.event.xkey.keycode != 24){ // q for quit
         draw_automata(&canvas, &automata);
         update_canvas(&canvas);
-        while(!get_event(&canvas, KeyPressMask | ButtonPressMask));
-        if(canvas.event.type == ButtonPress){
+        while(!get_event(&canvas, KeyPressMask | ButtonPressMask | Button1MotionMask));
+
+        if(canvas.event.type == ButtonPress || canvas.event.type == MotionNotify){
             int idx = (canvas.event.xbutton.y / canvas.scale) * automata.size_x + (canvas.event.xbutton.x / canvas.scale);
             automata.cells[idx] = !automata.cells[idx];
         }else{

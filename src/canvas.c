@@ -41,7 +41,7 @@ int create_canvas(canvas_T * canvas) {
     WhitePixel(canvas->display, canvas->screen));
     
     XStoreName(canvas->display, canvas->window, canvas->name);
-    XSelectInput(canvas->display, canvas->window, ExposureMask | KeyPressMask | ButtonPressMask);
+    XSelectInput(canvas->display, canvas->window, ExposureMask | KeyPressMask | ButtonPressMask | Button1MotionMask);
     XMapWindow(canvas->display, canvas->window);
     XFlush(canvas->display);
 
