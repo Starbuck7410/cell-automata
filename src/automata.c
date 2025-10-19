@@ -42,3 +42,28 @@ void iterate_automata(automata_T * automata){
 void destroy_automata(automata_T * automata){
     free(automata->cells);
 }
+
+int flow_bounds(int x, int min, int max){
+    int size = max - min;
+    while(x > max) x -= size;
+    while(x < min) x += size;
+    return x;
+}
+
+int count_cell_neighbors_wrap(automata_T * automata, int x, int y){
+    int count = 0;
+    int w = automata->size_x;
+    int h = automata->size_y;
+
+    for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
+            if (dx == 0 && dy == 0) continue; // skip self
+            int nx = flow_bounds(x + dx, 0, w - 1);
+            int ny = flow_bounds(y + dy, 0, h - 1);
+            if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+            count += automata->cells[ny * w + nx];
+        }
+    }
+    return count;
+}
+

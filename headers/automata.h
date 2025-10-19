@@ -11,3 +11,4 @@ typedef struct automata_T {
 int create_automata(automata_T * automata);
 void destroy_automata(automata_T * automata);
 void iterate_automata(automata_T * automata);
+int count_cell_neighbors_wrap(automata_T * automata, int x, int y);
