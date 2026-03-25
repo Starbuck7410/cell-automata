@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "ios": "c",
-        "canvas.h": "c",
-        "chrono": "c",
-        "ranges": "c",
-        "variant": "c"
-    }
-}
